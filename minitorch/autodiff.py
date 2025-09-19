@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Any, Iterable, List, Tuple
+from typing import Any, Iterable, Tuple
 
 from typing_extensions import Protocol
 
@@ -22,7 +22,13 @@ def central_difference(f: Any, *vals: Any, arg: int = 0, epsilon: float = 1e-6) 
     Returns:
         An approximation of $f'_i(x_0, \ldots, x_{n-1})$
     """
-    raise NotImplementedError("Need to include this file from past assignment.")
+    vals_add = list(vals)
+    vals_minus = list(vals)
+
+    vals_add[arg] += epsilon
+    vals_minus[arg] -= epsilon
+
+    return (f(*vals_add) - f(*vals_minus)) / (2 * epsilon)
 
 
 variable_count = 1
@@ -60,7 +66,18 @@ def topological_sort(variable: Variable) -> Iterable[Variable]:
     Returns:
         Non-constant Variables in topological order starting from the right.
     """
-    raise NotImplementedError("Need to include this file from past assignment.")
+    sorted_order = []
+    visited = set()
+
+    def visit(node: Variable) -> None:
+        if node.unique_id in visited or node.is_constant():
+            return
+        visited.add(node.unique_id)
+        for parent in node.parents: 
+            visit(parent)
+        sorted_order.append(node)
+    visit(variable)
+    return reversed(sorted_order)
 
 
 def backpropagate(variable: Variable, deriv: Any) -> None:
@@ -74,7 +91,18 @@ def backpropagate(variable: Variable, deriv: Any) -> None:
 
     No return. Should write to its results to the derivative values of each leaf through `accumulate_derivative`.
     """
-    raise NotImplementedError("Need to include this file from past assignment.")
+    sorted_nodes = topological_sort(variable)
+    derivatives = {variable.unique_id: deriv}
+    for node in sorted_nodes:
+        d_node = derivatives[node.unique_id]
+        if node.is_leaf(): 
+            node.accumulate_derivative(d_node)
+        else:
+            parent_grads = node.chain_rule(d_node)
+            for par, gradi in parent_grads:
+                if par.unique_id not in derivatives:
+                    derivatives[par.unique_id] = 0.0
+                derivatives[par.unique_id] += gradi
 
 
 @dataclass
