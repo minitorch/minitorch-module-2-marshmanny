@@ -73,7 +73,7 @@ def topological_sort(variable: Variable) -> Iterable[Variable]:
         if node.unique_id in visited or node.is_constant():
             return
         visited.add(node.unique_id)
-        for parent in node.parents: 
+        for parent in node.parents:
             visit(parent)
         sorted_order.append(node)
     visit(variable)
@@ -95,7 +95,7 @@ def backpropagate(variable: Variable, deriv: Any) -> None:
     derivatives = {variable.unique_id: deriv}
     for node in sorted_nodes:
         d_node = derivatives[node.unique_id]
-        if node.is_leaf(): 
+        if node.is_leaf():
             node.accumulate_derivative(d_node)
         else:
             parent_grads = node.chain_rule(d_node)

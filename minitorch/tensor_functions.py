@@ -153,13 +153,12 @@ class Exp(Function):
         res = t1.f.exp_map(t1)
         ctx.save_for_backward(res)
         return res
-    
+
     @staticmethod
     def backward(ctx: Context, grad_output: Tensor) -> Tensor:
         # dL/dA = dL/dE * dE/dA = grad_output * E
         (res,) = ctx.saved_values
         return cast(minitorch.Tensor, grad_output * res)
-        
 
 
 class Sum(Function):
@@ -194,7 +193,6 @@ class LT(Function):
         # dC/dA = 0, dC/dB = 0 => dL/dA = dL/dC * dC/dA = grad_output * 0 = 0
         a_shape, b_shape = ctx.saved_values
         return zeros(a_shape), zeros(b_shape)
-    
 
 
 class EQ(Function):
