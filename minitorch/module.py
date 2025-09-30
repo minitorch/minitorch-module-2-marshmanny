@@ -60,7 +60,6 @@ class Module:
                 params_list.append((final_name, child_param))
         return params_list
 
-
     def parameters(self) -> Sequence[Parameter]:
         "Enumerate over all the parameters of this module and its descendents."
         return [param for name, param in self.named_parameters()]

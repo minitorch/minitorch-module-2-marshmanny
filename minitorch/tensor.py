@@ -153,7 +153,6 @@ class Tensor:
     def __rsub__(self, b: TensorLike) -> Tensor:
         return self._ensure_tensor(b) + (-self)
 
-
     def __mul__(self, b: TensorLike) -> Tensor:
         return Mul.apply(self, self._ensure_tensor(b))
 

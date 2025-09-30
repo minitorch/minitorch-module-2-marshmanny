@@ -7,7 +7,6 @@ from typing_extensions import Protocol
 
 from . import operators
 from .tensor_data import (
-    MAX_DIMS,
     broadcast_index,
     index_to_position,
     shape_broadcast,
@@ -17,7 +16,6 @@ from .tensor_data import (
 if TYPE_CHECKING:
     from .tensor import Tensor
     from .tensor_data import Index, Shape, Storage, Strides
-
 
 class MapProto(Protocol):
     def __call__(self, x: Tensor, out: Optional[Tensor] = ..., /) -> Tensor:
@@ -330,13 +328,11 @@ def tensor_zip(fn: Callable[[float, float], float]) -> Any:
 
         for out_pos in range(len(out)):
             to_index(out_pos, out_shape, out_idx)
-            
             broadcast_index(out_idx, out_shape, a_shape, a_idx)
             broadcast_index(out_idx, out_shape, b_shape, b_idx)
-            
+
             a_pos = index_to_position(a_idx, a_strides)
             b_pos = index_to_position(b_idx, b_strides)
-
             out[out_pos] = fn(a_storage[a_pos], b_storage[b_pos])
 
     return _zip
