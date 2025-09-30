@@ -117,7 +117,6 @@ def shape_broadcast(shape1: UserShape, shape2: UserShape) -> UserShape:
             result_shapes.append(max(d1, d2))
         else:
             raise IndexingError(f"Cannot broadcast given shapes {shape1} and {shape2}")
-        
     rever = reversed(result_shapes)
     return tuple(rever)
 

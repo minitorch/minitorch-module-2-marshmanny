@@ -83,34 +83,34 @@ class Scalar:
         return "Scalar(%f)" % self.data
 
     def __mul__(self, b: ScalarLike) -> Scalar:
-        return cast(Mul.apply(self, b))
+        return cast(Scalar, Mul.apply(self, b))
 
     def __truediv__(self, b: ScalarLike) -> Scalar:
         return Mul.apply(self, Inv.apply(b))
 
     def __rtruediv__(self, b: ScalarLike) -> Scalar:
-        return cast(Mul.apply(b, Inv.apply(self)))
+        return cast(Scalar, Mul.apply(b, Inv.apply(self)))
 
     def __add__(self, b: ScalarLike) -> Scalar:
-        return cast(Add.apply(self, b))
+        return cast(Scalar, Add.apply(self, b))
 
     def __bool__(self) -> bool:
         return bool(self.data)
 
     def __lt__(self, b: ScalarLike) -> Scalar:
-        return cast(LT.apply(self, b))
+        return cast(Scalar, LT.apply(self, b))
 
     def __gt__(self, b: ScalarLike) -> Scalar:
-        return cast(LT.apply(b, self))
+        return cast(Scalar, LT.apply(b, self))
 
     def __eq__(self, b: ScalarLike) -> Scalar:  # type: ignore[override]
-        return cast(EQ.apply(self, b))
+        return cast(Scalar, EQ.apply(self, b))
 
     def __sub__(self, b: ScalarLike) -> Scalar:
-        return cast(Add.apply(self, Neg.apply(b)))
+        return cast(Scalar, Add.apply(self, Neg.apply(b)))
 
     def __neg__(self) -> Scalar:
-        return cast(Neg.apply(self))
+        return cast(Scalar, Neg.apply(self))
 
     def __radd__(self, b: ScalarLike) -> Scalar:
         return self + b
@@ -119,13 +119,13 @@ class Scalar:
         return self * b
 
     def log(self) -> Scalar:
-        return cast(Log.apply(self))
+        return cast(Scalar, Log.apply(self))
 
     def exp(self) -> Scalar:
-        return cast(Exp.apply(self))
+        return cast(Scalar, Exp.apply(self))
 
     def sigmoid(self) -> Scalar:
-        return cast(Sigmoid.apply(self))
+        return cast(Scalar, Sigmoid.apply(self))
 
     def relu(self) -> Scalar:
         return cast(ReLU.apply(self))
