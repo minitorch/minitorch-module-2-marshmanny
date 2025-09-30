@@ -5,7 +5,7 @@ Implementation of the autodifferentiation Functions for Tensor.
 from __future__ import annotations
 
 import random
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, cast
 
 import numpy as np
 
@@ -16,7 +16,7 @@ from .autodiff import Context
 from .tensor_ops import SimpleBackend, TensorBackend
 
 if TYPE_CHECKING:
-    from typing import Any, List, Tuple, cast
+    from typing import Any, List, Tuple
 
     from .tensor import Tensor
     from .tensor_data import UserIndex, UserShape
