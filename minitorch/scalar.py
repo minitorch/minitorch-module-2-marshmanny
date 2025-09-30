@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Iterable, Optional, Sequence, Tuple, Type, Union
+from typing import Any, Iterable, Optional, Sequence, Tuple, Type, Union, cast
 
 import numpy as np
 
@@ -83,34 +83,34 @@ class Scalar:
         return "Scalar(%f)" % self.data
 
     def __mul__(self, b: ScalarLike) -> Scalar:
-        return Mul.apply(self, b)
+        return cast(Mul.apply(self, b))
 
     def __truediv__(self, b: ScalarLike) -> Scalar:
         return Mul.apply(self, Inv.apply(b))
 
     def __rtruediv__(self, b: ScalarLike) -> Scalar:
-        return Mul.apply(b, Inv.apply(self))
+        return cast(Mul.apply(b, Inv.apply(self)))
 
     def __add__(self, b: ScalarLike) -> Scalar:
-        return Add.apply(self, b)
+        return cast(Add.apply(self, b))
 
     def __bool__(self) -> bool:
         return bool(self.data)
 
     def __lt__(self, b: ScalarLike) -> Scalar:
-        return LT.apply(self, b)
+        return cast(LT.apply(self, b))
 
     def __gt__(self, b: ScalarLike) -> Scalar:
-        return LT.apply(b, self)
+        return cast(LT.apply(b, self))
 
     def __eq__(self, b: ScalarLike) -> Scalar:  # type: ignore[override]
-        return EQ.apply(self, b)
+        return cast(EQ.apply(self, b))
 
     def __sub__(self, b: ScalarLike) -> Scalar:
-        return Add.apply(self, Neg.apply(b))
+        return cast(Add.apply(self, Neg.apply(b)))
 
     def __neg__(self) -> Scalar:
-        return Neg.apply(self)
+        return cast(Neg.apply(self))
 
     def __radd__(self, b: ScalarLike) -> Scalar:
         return self + b
@@ -119,16 +119,16 @@ class Scalar:
         return self * b
 
     def log(self) -> Scalar:
-        return Log.apply(self)
+        return cast(Log.apply(self))
 
     def exp(self) -> Scalar:
-        return Exp.apply(self)
+        return cast(Exp.apply(self))
 
     def sigmoid(self) -> Scalar:
-        return Sigmoid.apply(self)
+        return cast(Sigmoid.apply(self))
 
     def relu(self) -> Scalar:
-        return ReLU.apply(self)
+        return cast(ReLU.apply(self))
 
     # Variable elements for backprop
 

@@ -105,7 +105,7 @@ class Mul(Function):
     @staticmethod
     def backward(ctx: Context, grad_output: Tensor) -> Tuple[Tensor, Tensor]:
         a, b = ctx.saved_values  # A и B, которые сохранили в forward
-        return grad_output * b, grad_output * a #dL/dC * dL/da, dL/dC * dL/db
+        return grad_output * b, grad_output * a   # dL/dC * dL/da, dL/dC * dL/db
 
 
 class Sigmoid(Function):
@@ -117,7 +117,7 @@ class Sigmoid(Function):
 
     @staticmethod
     def backward(ctx: Context, grad_output: Tensor) -> Tensor:
-        #dS/dA = S * (1 - S)
+        # dS/dA = S * (1 - S)
         (s,) = ctx.saved_values
         return grad_output * s * (1.0 - s)
 
@@ -156,7 +156,7 @@ class Exp(Function):
     
     @staticmethod
     def backward(ctx: Context, grad_output: Tensor) -> Tensor:
-        #dL/dA = dL/dE * dE/dA = grad_output * E
+        # dL/dA = dL/dE * dE/dA = grad_output * E
         (res,) = ctx.saved_values
         return grad_output * res
         
@@ -191,7 +191,7 @@ class LT(Function):
 
     @staticmethod
     def backward(ctx: Context, grad_output: Tensor) -> Tuple[Tensor, Tensor]:
-        #dC/dA = 0, dC/dB = 0 => dL/dA = dL/dC * dC/dA = grad_output * 0 = 0
+        # dC/dA = 0, dC/dB = 0 => dL/dA = dL/dC * dC/dA = grad_output * 0 = 0
         a_shape, b_shape = ctx.saved_values
         return zeros(a_shape), zeros(b_shape)
     
