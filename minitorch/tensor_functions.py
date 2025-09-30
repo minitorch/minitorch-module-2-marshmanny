@@ -15,11 +15,11 @@ from . import operators
 from .autodiff import Context
 from .tensor_ops import SimpleBackend, TensorBackend
 
-if TYPE_CHECKING:
-    from typing import Any, List, Tuple
 
-    from .tensor import Tensor
-    from .tensor_data import UserIndex, UserShape
+from typing import Any, List, Tuple
+
+from .tensor import Tensor
+from .tensor_data import UserIndex, UserShape
 
 
 def wrap_tuple(x):  # type: ignore
