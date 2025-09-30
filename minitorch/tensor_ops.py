@@ -15,7 +15,8 @@ from .tensor_data import (
 
 if TYPE_CHECKING:
     from .tensor import Tensor
-    from .tensor_data import Index, Shape, Storage, Strides
+    from .tensor_data import Shape, Storage, Strides
+
 
 class MapProto(Protocol):
     def __call__(self, x: Tensor, out: Optional[Tensor] = ..., /) -> Tensor:
@@ -266,7 +267,7 @@ def tensor_map(fn: Callable[[float], float]) -> Any:
         in_shape: Shape,
         in_strides: Strides,
     ) -> None:
-                
+        
         in_ind = np.zeros(len(in_shape), np.int32)
         out_ind = np.zeros(len(out_shape), np.int32)
 
@@ -373,7 +374,6 @@ def tensor_reduce(fn: Callable[[float, float], float]) -> Any:
         for i in range(len(out)):
             to_index(i, out_shape, out_index)
             out_poss = index_to_position(out_index, out_strides)
-            
             a_ind = out_index.copy()
             for j in range(a_shape[reduce_dim]):
                 a_ind[reduce_dim] = j

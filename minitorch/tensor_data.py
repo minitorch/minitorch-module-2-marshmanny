@@ -117,7 +117,7 @@ def shape_broadcast(shape1: UserShape, shape2: UserShape) -> UserShape:
             result_shapes.append(max(d1, d2))
         else:
             raise IndexingError(f"Cannot broadcast given shapes {shape1} and {shape2}")
-      
+    
     rever = reversed(result_shapes)
     return tuple(rever)
 
@@ -253,7 +253,7 @@ class TensorData:
                     break
             s += l
             v = self.get(index)
-            s += f"{v:3.2f}"
+            s += f"{v: 3.2f}"
             l = ""
             for i in range(len(index) - 1, -1, -1):
                 if index[i] == self.shape[i] - 1:

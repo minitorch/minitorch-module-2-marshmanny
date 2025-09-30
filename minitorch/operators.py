@@ -17,7 +17,7 @@ def mul(x: float, y: float) -> float:
 
 def id(x: float) -> float:
     "$f(x) = x$"
-    return x 
+    return x
 
 
 def add(x: float, y: float) -> float:
@@ -45,11 +45,9 @@ def max(x: float, y: float) -> float:
     return x if x >= y else y
 
 
-
 def is_close(x: float, y: float) -> float:
     "$f(x) = |x - y| < 1e-2$"
     return abs(x - y) < 1e-2
-
 
 
 def sigmoid(x: float) -> float:
