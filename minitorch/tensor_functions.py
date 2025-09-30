@@ -186,6 +186,7 @@ class All(Function):
 class LT(Function):
     @staticmethod
     def forward(ctx: Context, a: Tensor, b: Tensor) -> Tensor:
+        ctx.save_for_backward(a, b)
         return a.f.lt_zip(a, b)
 
     @staticmethod
@@ -199,6 +200,7 @@ class LT(Function):
 class EQ(Function):
     @staticmethod
     def forward(ctx: Context, a: Tensor, b: Tensor) -> Tensor:
+        ctx.save_for_backward(a.shape, b.shape)
         return a.f.eq_zip(a, b)
 
     @staticmethod
@@ -216,9 +218,9 @@ class IsClose(Function):
 class Permute(Function):
     @staticmethod
     def forward(ctx: Context, a: Tensor, order: Tensor) -> Tensor:
-        ctx.save_for_backward(tuple(list(range(a.dims))))
-        permutte = [int(order[i]) for i in range(order.size)]
-        return a._new(a._tensor.permute(*permutte))
+        permute_order = tuple(int(order[i]) for i in range(order.size))
+        ctx.save_for_backward(permute_order)
+        return a._new(a._tensor.permute(*permute_order))
 
     @staticmethod
     def backward(ctx: Context, grad_output: Tensor) -> Tuple[Tensor, float]:
