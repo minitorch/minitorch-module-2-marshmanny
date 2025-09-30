@@ -86,7 +86,7 @@ class Scalar:
         return cast(Scalar, Mul.apply(self, b))
 
     def __truediv__(self, b: ScalarLike) -> Scalar:
-        return Mul.apply(self, Inv.apply(b))
+        return cast(Scalar, Mul.apply(self, Inv.apply(b)))
 
     def __rtruediv__(self, b: ScalarLike) -> Scalar:
         return cast(Scalar, Mul.apply(b, Inv.apply(self)))
@@ -128,7 +128,7 @@ class Scalar:
         return cast(Scalar, Sigmoid.apply(self))
 
     def relu(self) -> Scalar:
-        return cast(ReLU.apply(self))
+        return cast(Scalar, ReLU.apply(self))
 
     # Variable elements for backprop
 

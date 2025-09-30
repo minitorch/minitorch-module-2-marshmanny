@@ -16,7 +16,7 @@ from .autodiff import Context
 from .tensor_ops import SimpleBackend, TensorBackend
 
 if TYPE_CHECKING:
-    from typing import Any, List, Tuple
+    from typing import Any, List, Tuple, cast
 
     from .tensor import Tensor
     from .tensor_data import UserIndex, UserShape
@@ -119,7 +119,7 @@ class Sigmoid(Function):
     def backward(ctx: Context, grad_output: Tensor) -> Tensor:
         # dS/dA = S * (1 - S)
         (s,) = ctx.saved_values
-        return grad_output * s * (1.0 - s)
+        return cast(Tensor, grad_output * s * (1.0 - s))
 
 
 class ReLU(Function):
@@ -130,7 +130,7 @@ class ReLU(Function):
 
     @staticmethod
     def backward(ctx: Context, grad_output: Tensor) -> Tensor:
-        (t1,) = ctx.saved_values 
+        (t1,) = ctx.saved_values
         return grad_output.f.relu_back_zip(t1, grad_output)
 
 
@@ -144,7 +144,7 @@ class Log(Function):
     def backward(ctx: Context, grad_output: Tensor) -> Tensor:
         # dL/dA = dL/dL_out * dL_out/dA = grad_output * (1/A) = grad_output / A.
         (t1,) = ctx.saved_values
-        return grad_output / t1
+        return cast(Tensor, grad_output / t1)
 
 
 class Exp(Function):
@@ -158,7 +158,7 @@ class Exp(Function):
     def backward(ctx: Context, grad_output: Tensor) -> Tensor:
         # dL/dA = dL/dE * dE/dA = grad_output * E
         (res,) = ctx.saved_values
-        return grad_output * res
+        return cast(Tensor, grad_output * res)
         
 
 

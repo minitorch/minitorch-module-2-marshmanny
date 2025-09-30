@@ -79,6 +79,7 @@ def relu(x: float) -> float:
 
 EPS = 1e-6
 
+
 def log(x: float) -> float:
     "$f(x) = log(x)$"
     return math.log(x + EPS)
@@ -92,6 +93,7 @@ def exp(x: float) -> float:
 def log_back(x: float, d: float) -> float:
     r"If $f = log$ as above, compute $d \times f'(x)$"
     return d / (x + EPS)
+
 
 def inv(x: float) -> float:
     "$f(x) = 1/x$"
@@ -156,6 +158,7 @@ def zipWith(
         return [fn(x, y) for x, y in zip(ls1, ls2)]
     return zipper
 
+
 def addLists(ls1: Iterable[float], ls2: Iterable[float]) -> Iterable[float]:
     "Add the elements of `ls1` and `ls2` using `zipWith` and `add`"
     return zipWith(add)(ls1, ls2)
@@ -192,4 +195,3 @@ def sum(ls: Iterable[float]) -> float:
 def prod(ls: Iterable[float]) -> float:
     "Product of a list using `reduce` and `mul`."
     return reduce(mul, 1.0)(ls)
-
