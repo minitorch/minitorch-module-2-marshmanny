@@ -119,7 +119,7 @@ class Sigmoid(Function):
     def backward(ctx: Context, grad_output: Tensor) -> Tensor:
         # dS/dA = S * (1 - S)
         (s,) = ctx.saved_values
-        return cast(Tensor, grad_output * s * (1.0 - s))
+        return cast(minitorch.Tensor, grad_output * s * (1.0 - s))
 
 
 class ReLU(Function):
@@ -144,7 +144,7 @@ class Log(Function):
     def backward(ctx: Context, grad_output: Tensor) -> Tensor:
         # dL/dA = dL/dL_out * dL_out/dA = grad_output * (1/A) = grad_output / A.
         (t1,) = ctx.saved_values
-        return cast(Tensor, grad_output / t1)
+        return cast(minitorch.Tensor, grad_output / t1)
 
 
 class Exp(Function):
@@ -158,7 +158,7 @@ class Exp(Function):
     def backward(ctx: Context, grad_output: Tensor) -> Tensor:
         # dL/dA = dL/dE * dE/dA = grad_output * E
         (res,) = ctx.saved_values
-        return cast(Tensor, grad_output * res)
+        return cast(minitorch.Tensor, grad_output * res)
         
 
 
